@@ -63,7 +63,7 @@ klee_assume(json[SIZE - 1] == '\0');
 After creating the symbolic null-terminated string, run your code in docker
 with the following commands (don't worry about any KLEE warnings).
 ```{bash}
-$ cd ../hw/Exercise-2
+$ cd ../Exercise-2
 $ clang -I ../../../klee/klee_src/include/klee -emit-llvm -c -g -O0 -Xclang -disable-O0-optnone klee_json.c
 $ klee -output-dir ./klee klee_json.bc
 ```
@@ -92,7 +92,7 @@ KLEE will be able to traverse the maze and find the exit!
 In your docker terminal, run the following to test your code.
 
 ```{bash}
-$ cd ../hw/Exercise-3
+$ cd ../Exercise-3
 $ clang -I ../../../klee/klee_src/include/klee -emit-llvm -c -g -O0 -Xclang -disable-O0-optnone pathfinding.c
 $ klee -output-dir ./klee pathfinding.bc
 ```
