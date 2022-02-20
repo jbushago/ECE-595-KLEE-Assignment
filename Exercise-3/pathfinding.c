@@ -25,11 +25,11 @@ char MAZE[HEIGHT][WIDTH] = {
 void print_maze() {
     for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < WIDTH; j++) {
-            putc(MAZE[i][j], stdout);
+            printf("%c ", MAZE[i][j]);
         }
-        putc('\n', stdout);
+        putchar('\n');
     }
-    putc('\n', stdout);
+    putchar('\n');
 }
 
 bool traverse_maze(char* path) {
@@ -54,7 +54,6 @@ bool traverse_maze(char* path) {
         if (MAZE[y][x] == '#') {
             MAZE[y][x] = 'X';
             print_maze();
-            assert(false); // This is just here to make KLEE notice.
             return true;
         } else if (MAZE[y][x] != ' ') {
             return false;
@@ -69,8 +68,9 @@ int main() {
      * Make path symbolic using `klee_make_symbolic`,
      * then use `klee_assume` to guarantee that path
      * is null-terminated.
-     * Finally, traverse your symbolic path with
-     * `traverse_maze`, does it find the end?
+     * Finally, `assert` that a call to `traverse_maze` with
+     * your symbolic path will not return true.
+     * Does KLEE successfully find the end of the maze?
      */
     return EXIT_SUCCESS;
 }

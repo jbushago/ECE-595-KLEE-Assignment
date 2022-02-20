@@ -83,16 +83,17 @@ Inspect `Exercise-3/pathfinding.c`, on a very high level you should see that
 the `traverse_maze` function parses a null-terminated string as a list of
 commands for traversing the maze defined at the top of the file. If the
 traversed path leads to the end of the maze (denoted by `#`), then the
-function fails an assertion (which will get KLEE's attention).
+function returns `true`.
 
-In the `main` function, create a symbolic null-terminated string and run
-`traverse_maze` with that symbolic string as input. If done correctly,
-KLEE will be able to traverse the maze and find the exit!
+In the `main` function, create a symbolic null-terminated string and assert
+`traverse_maze`, when run with that symbolic string as input, will return
+`false`. If done correctly, KLEE will be able to traverse the maze and find
+the exit!
 
 In your docker terminal, run the following to test your code.
 
 ```{bash}
 $ cd ../Exercise-3
 $ clang -I ../../../klee/klee_src/include/klee -emit-llvm -c -g -O0 -Xclang -disable-O0-optnone pathfinding.c
-$ klee -output-dir ./klee pathfinding.bc
+$ klee -output-dir ./klee --warnings-only-to-file pathfinding.bc # supressing warnings to make printout readable
 ```
